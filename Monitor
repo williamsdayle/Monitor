@@ -1,0 +1,62 @@
+package monitor;
+
+
+public class Escola implements Runnable {
+    
+    private int[] notaProv;
+    private int notaTrab;
+    private int numFalt;
+    
+    public Escola(int notas[],int notaTrab,int numFalt){
+        this.notaProv = notas;
+        this.notaTrab = notaTrab;
+        this.numFalt = numFalt;
+    
+    }
+    
+
+    public int[] getNotaProv() {
+        return notaProv;
+    }   
+
+    public int getNotaTrab() {
+        return notaTrab;
+    }
+
+    public  void setNotaTrab(int notaTrab) {
+        this.notaTrab = notaTrab;
+    }
+
+    public int getNumFalt() {
+        return numFalt;
+    }
+
+    public  void setNumFalt(int numFalt) {
+        this.numFalt = numFalt;
+    }
+    
+    
+    public synchronized int somarNota(){
+    int valor = 0;
+    for(int i =0;i<this.notaProv.length;i++){
+        valor +=this.notaProv[i];        
+    }
+    return valor + this.getNotaTrab();
+    }
+    public double removerNota(){
+    double valor = (this.somarNota()/this.notaProv.length+1) - (this.getNumFalt()*0.03);
+    return valor;
+    }
+    public void run () {        
+     for (int i = 0; i < this.notaProv.length; i++) {
+         System.out.println("Notas :> " + this.notaProv[i]+"\n" +"Nota Trabalho :> " + this.getNotaTrab()+"\n" );
+     }
+        System.out.println("Nota Total :> " + this.removerNota());
+   }
+
+    
+    
+    
+    
+    
+}
