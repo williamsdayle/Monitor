@@ -2,21 +2,26 @@ package monitor;
 
 public class Monitor {
 
-    
+   
     public static void main(String[] args) {
-       int notas[] = new int[5];
-       notas[0] = 4;
-       notas[1] = 5;
-       notas[2] = 10;
-       notas[3] = 8;
-       notas[4] = 7;
-        Escola es1 = new Escola(notas,7,3);      
+        float[] notasProva = new float[5];
+        float[] notasTrabalho = new float[2];
+        notasProva[0] = 4;
+        notasProva[1] = 8;
+        notasProva[2] = 10;
+        notasProva[3] = 5;
+        notasProva[4] = 8;
+        notasTrabalho[0] = 6;
+        notasTrabalho[1] = 2;
+        int faltas = 4;
+        Faculdade es1 = new Faculdade(notasProva,notasTrabalho,faltas);      
         Thread t1 = new Thread(es1);
+        Thread t2= new Thread(es1);
+        Thread t3 = new Thread(es1);
         
         t1.start();
-       
-       
-       
+        t2.start();        
+        t3.start();
     }
     
 }
