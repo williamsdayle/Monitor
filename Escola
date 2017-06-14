@@ -1,62 +1,76 @@
 package monitor;
 
+public class Faculdade implements Runnable{
 
-public class Escola implements Runnable {
-    
-    private int[] notaProv;
-    private int notaTrab;
-    private int numFalt;
-    
-    public Escola(int notas[],int notaTrab,int numFalt){
-        this.notaProv = notas;
-        this.notaTrab = notaTrab;
-        this.numFalt = numFalt;
-    
-    }
-    
+    private float[] notaProva;
+    private float[] notaTrabalho;
+    private int faltas;
 
-    public int[] getNotaProv() {
-        return notaProv;
-    }   
-
-    public int getNotaTrab() {
-        return notaTrab;
+    public Faculdade(float[] notaP, float[] notaT, int faltas) {
+        this.notaProva = notaP;
+        this.notaTrabalho = notaT;
+        this.faltas = faltas;
     }
 
-    public  void setNotaTrab(int notaTrab) {
-        this.notaTrab = notaTrab;
+    public float[] getNotaProva() {
+        return notaProva;
     }
 
-    public int getNumFalt() {
-        return numFalt;
+    public void setNotaProva(float[] notaP) {
+        this.notaProva = notaP;
     }
 
-    public  void setNumFalt(int numFalt) {
-        this.numFalt = numFalt;
+    public float[] getNotaTrabalho() {
+        return notaTrabalho;
+    }
+
+    public void setNotaTrabalho(float[] notaT) {
+        this.notaTrabalho = notaT;
+    }
+
+    public int getFaltas() {
+        return faltas;
+    }
+
+    public void setFaltas(int faltas) {
+        this.faltas = faltas;
     }
     
-    
-    public synchronized int somarNota(){
+    public synchronized float somaNotas(){
+        
     int valor = 0;
-    for(int i =0;i<this.notaProv.length;i++){
-        valor +=this.notaProv[i];        
+        for(int i =0;i<this.notaProva.length;i++){
+            valor +=this.notaProva[i];        
+        }
+        for(int i =0;i<this.notaTrabalho.length;i++){
+            valor +=this.notaTrabalho[i];        
+        }
+            return valor;
     }
-    return valor + this.getNotaTrab();
+    
+    public double calculoFinal(){
+        
+        double valor = (this.somaNotas()/((this.notaProva.length)+(this.notaTrabalho.length)) * (1 -(this.getFaltas() * 0.03)));
+        
+        return valor;
     }
-    public double removerNota(){
-    double valor = (this.somarNota()/this.notaProv.length+1) - (this.getNumFalt()*0.03);
-    return valor;
-    }
-    public void run () {        
-     for (int i = 0; i < this.notaProv.length; i++) {
-         System.out.println("Notas :> " + this.notaProv[i]+"\n" +"Nota Trabalho :> " + this.getNotaTrab()+"\n" );
-     }
-        System.out.println("Nota Total :> " + this.removerNota());
-   }
+    
 
     
-    
-    
-    
-    
+    @Override
+    public void run() {
+        
+        for (int i = 0; i < this.notaProva.length; i++) {
+        System.out.println("Nota da Prova " + (i+1) + " : "  + this.notaProva[i]+"\n" );
+     }
+        for (int i = 0; i < this.notaTrabalho.length; i++) {
+        System.out.println("Nota Trabalho " + (i+1) + " : " + this.notaTrabalho[i]+"\n"); 
+     }
+
+        System.out.printf("Nota total : %.2f\n", this.calculoFinal());
+
+        
+        
+    }
+   
 }
